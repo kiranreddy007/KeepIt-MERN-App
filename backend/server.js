@@ -1,23 +1,26 @@
-const express=require('express');
-const notes = require('./data/notes');
-const dotenv=require('dotenv');
+const express = require("express");
+const notes = require("./data/notes");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const UserRoutes = require("./routes/UserRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleWare");
 
-const app =express();
+const app = express();
 dotenv.config();
-
-app.get('/',(req,res)=>{
-    res.send("API is running");
+connectDB();
+app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("API is running");
 });
 
-app.get('/api/notes',(req,res)=>{
-    res.json(notes);
-});
+// app.get("/api/notes", (req, res) => {
+//   res.json(notes);
+// });
 
-app.get('/api/notes/:id',(req,res)=>{
+app.use("/api/users", UserRoutes);
 
-    const note=notes.find((n)=>n._id == req.params.id);
-    res.send(note);
-});
+app.use(notFound);
+app.use(errorHandler);
 
-const PORT =process.env.PORT || 5000;
-app.listen(PORT,console.log(`server up at port ${PORT} `));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, console.log(`server up at port ${PORT} `));
