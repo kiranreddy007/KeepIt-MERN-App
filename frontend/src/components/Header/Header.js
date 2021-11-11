@@ -1,9 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { Container, Navbar, NavDropdown,Nav,FormControl,Form,Button } from 'react-bootstrap';
+import {
+  Container,
+  Navbar,
+  NavDropdown,
+  Nav,
+  FormControl,
+  Form,
+  Button,
+} from "react-bootstrap";
+import { useNavigate } from "react-router";
+
 const Header = () => {
-    return (
-      <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
+  const navigate = useNavigate();
+  return (
+    <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Container>
         <Navbar.Brand href="/">Keep it</Navbar.Brand>
 
@@ -23,15 +34,22 @@ const Header = () => {
             <Nav.Link href="/mynotes">My Notes</Nav.Link>
             <NavDropdown title="User" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
-              
+
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  localStorage.removeItem("userInfo");
+                  navigate("/");
+                }}
+              >
+                Logout
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    );
-}
+  );
+};
 
-export default Header
+export default Header;
