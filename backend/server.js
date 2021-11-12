@@ -1,8 +1,8 @@
 const express = require("express");
-const notes = require("./data/notes");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const UserRoutes = require("./routes/UserRoutes");
+const noteRoutes = require("./routes/noteRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleWare");
 
 const app = express();
@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", UserRoutes);
-
+app.use("/api/notes", noteRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
