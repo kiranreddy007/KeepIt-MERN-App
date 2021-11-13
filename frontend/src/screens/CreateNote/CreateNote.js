@@ -33,7 +33,7 @@ function CreateNote() {
     if (!title || !content || !category) return;
 
     resetHandler();
-    // navigate("/mynotes");
+    navigate("/mynotes");
   };
 
   //   useEffect(() => {}, []);

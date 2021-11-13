@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listNotes, deleteNoteAction } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
-const MyNotes = () => {
+const MyNotes = ({ search }) => {
   const dispatch = useDispatch();
 
   const noteList = useSelector((state) => state.noteList);
@@ -50,49 +50,54 @@ const MyNotes = () => {
         </Link>
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
-        {notes?.map((note) => (
-          <Accordion>
-            <Accordion.Item eventKey={note._id}>
-              <Accordion.Header>
-                <span
-                  style={{
-                    color: "black",
-                    textDecoration: "none",
-                    flex: 1,
-                    curusor: "pointer",
-                    alignSelf: "center",
-                    fontSize: 18,
-                  }}
-                >
-                  {note.title}
-                </span>
-                <div>
-                  <Button href={`/note/${note._id}`}>Edit</Button>
-                  <Button
-                    variant="danger"
-                    className="mx-2"
-                    onClick={() => deleteHandler(note._id)}
+        {notes
+          ?.reverse()
+          .filter((filteredNote) =>
+            filteredNote.title.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((note) => (
+            <Accordion>
+              <Accordion.Item eventKey={note._id}>
+                <Accordion.Header>
+                  <span
+                    style={{
+                      color: "black",
+                      textDecoration: "none",
+                      flex: 1,
+                      curusor: "pointer",
+                      alignSelf: "center",
+                      fontSize: 18,
+                    }}
                   >
-                    Delete
-                  </Button>
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <h4>
-                  <Badge variant="success" className="badge bg-success">
-                    Category-{note.category}
-                  </Badge>
-                </h4>
-                <blockquote className="blockquote mb-0">
-                  <p>{note.content}</p>
-                  <footer className="blockquote-footer">
-                    Created on {note.createdAt.substring(0, 10)}
-                  </footer>
-                </blockquote>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-        ))}
+                    {note.title}
+                  </span>
+                  <div>
+                    <Button href={`/note/${note._id}`}>Edit</Button>
+                    <Button
+                      variant="danger"
+                      className="mx-2"
+                      onClick={() => deleteHandler(note._id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <h4>
+                    <Badge variant="success" className="badge bg-success">
+                      Category-{note.category}
+                    </Badge>
+                  </h4>
+                  <blockquote className="blockquote mb-0">
+                    <p>{note.content}</p>
+                    <footer className="blockquote-footer">
+                      Created on {note.createdAt.substring(0, 10)}
+                    </footer>
+                  </blockquote>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          ))}
       </MainScreen>
     </div>
   );

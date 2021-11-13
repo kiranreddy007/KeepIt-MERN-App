@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { logout } from "../../actions/userActions";
 
-const Header = () => {
+const Header = ({ setSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -36,14 +36,15 @@ const Header = () => {
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2"
+                onChange={(e) => setSearch(e.target.value)}
               />
               {/* <Button variant="secondary">Search</Button> */}
             </Form>
           </Nav>
           <Nav>
             <Nav.Link href="/mynotes">My Notes</Nav.Link>
-            <NavDropdown title="User" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
+            <NavDropdown title={userInfo.name} id="collasible-nav-dropdown">
+              <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
 
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logoutHandler}>

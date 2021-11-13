@@ -8,19 +8,23 @@ import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import CreateNote from "./screens/CreateNote/CreateNote";
 import SingleNote from "./screens/CreateNote/SingleNote";
+import { useState } from "react";
+import UserProfile from "./screens/UserProfile/UserProfile";
 
 const App = () => {
+  const [search, setSearch] = useState("");
   return (
     <>
-      <Header />
+      <Header setSearch={setSearch} />
       <main className="App">
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
           <Route path="/login" exact element={<LoginScreen />} />
           <Route path="/signup" exact element={<RegisterScreen />} />
+          <Route path="/profile" exact element={<UserProfile />} />
           <Route path="/createnote" exact element={<CreateNote />} />
           <Route path="/note/:id" exact element={<SingleNote />} />
-          <Route path="/mynotes" element={<MyNotes />} />
+          <Route path="/mynotes" element={<MyNotes search={search} />} />
         </Routes>
       </main>
       <Footer />
