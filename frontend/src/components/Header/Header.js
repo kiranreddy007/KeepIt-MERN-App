@@ -43,7 +43,10 @@ const Header = ({ setSearch }) => {
           </Nav>
           <Nav>
             <Nav.Link href="/mynotes">My Notes</Nav.Link>
-            <NavDropdown title={userInfo.name} id="collasible-nav-dropdown">
+            <NavDropdown
+              title={(userInfo && userInfo.name) || "jk"}
+              id="collasible-nav-dropdown"
+            >
               <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
 
               <NavDropdown.Divider />

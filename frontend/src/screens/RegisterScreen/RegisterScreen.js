@@ -12,7 +12,32 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState();
+  const [pic, setPic] = useState("");
+  const [picMessage, setPicMessage] = useState("");
 
+  // const postDetails = (pics) => {
+  //   setPicMessage(null);
+  //   if (pics.type === "image/jpeg" || pics.type === "image/png") {
+  //     const data = new FormData();
+  //     data.append("file", pics);
+  //     data.append("upload_preset", "notezipper");
+  //     data.append("cloud_name", "piyushproj");
+  //     fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+  //       method: "post",
+  //       body: data,
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setPic(data.url.toString());
+  //         console.log(pic);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     return setPicMessage("Please Select an Image");
+  //   }
+  // };
   // const [fileName, setFileName] = useState("Upload Boundary File");
   const dispatch = useDispatch();
 
@@ -28,7 +53,7 @@ const RegisterScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    dispatch(register(email, password, password));
+    dispatch(register(name, email, password, pic));
   };
   return (
     <MainScreen title="Register">
@@ -75,16 +100,15 @@ const RegisterScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-          {/* <Form.Group controlId="formBasicPic">
-            <Form.Label>Profile Pic</Form.Label>
-            <Form.File
+          <Form.Group controlId="formBasicPic">
+            <Form.Control
+              // onChange={(e) => postDetails(e.target.files[0])}
               id="custom-file"
-              type="image/png"
-              label="upload profile pic"
-              onChange={(e) => setFileName(e.target.files[0].name)}
+              type="file"
+              label="Upload Profile Picture"
               custom
             />
-          </Form.Group> */}
+          </Form.Group>
           <Button variant="primary" type="submit">
             Submit
           </Button>
